@@ -1,0 +1,46 @@
+void ShellSort(int* nums,int numsSize)
+{
+    if(nums==NULL)
+    {
+        return;
+    }
+    else
+    {
+        int gap=numsSize;
+        while(gap>1)
+        {
+            gap=gap/3+1;
+            for(int i=0;i<numsSize-gap;i++)
+            {
+                int end=i;
+                int tmp=nums[end+gap];
+                while(end>=0)
+                {
+                    if(tmp<nums[end])
+                    {
+                        nums[end+gap]=nums[end];
+                        end-=gap;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                nums[end+gap]=tmp;
+            }
+        }
+     
+    }
+}
+
+bool containsDuplicate(int* nums, int numsSize){
+    ShellSort(nums,numsSize);
+    for(int i=0;i<numsSize-1;i++)
+    {
+        if(nums[i]==nums[i+1])
+        {
+            return true;
+        }
+    }
+    return false;
+}
