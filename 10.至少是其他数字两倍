@@ -1,0 +1,48 @@
+void ShellSort(int* a,int n)
+{
+    int gap=n;
+    while(gap>1)
+    {
+        gap=gap/3+1;
+        for(int i=0;i<n-gap;++i)
+        {
+            int end=i;
+            int tmp=a[end+gap];
+            while(end>=0)
+            {
+                if(tmp<a[end])
+                {
+                    a[end+gap]=a[end];
+                    end-=gap;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            a[end+gap]=tmp;
+        }
+    }
+
+}
+int dominantIndex(int* nums, int numsSize){
+    if(numsSize==1)
+    {
+        return 0;
+    }
+    else
+    {
+        int* tmp=(int*)malloc(sizeof(int)*numsSize);
+        memcpy(tmp,nums,sizeof(int)*numsSize);
+        ShellSort(tmp,numsSize);
+        if(tmp[numsSize-1]>=2.0*tmp[numsSize-2])
+        {
+           for(int i=0;i<numsSize;++i)
+           {
+               while(tmp[numsSize-1]==nums[i])
+               return i;
+           }
+        }
+        return -1;
+    }
+}
