@@ -1,0 +1,40 @@
+void ShellSort(int* a,int n)
+{
+    int gap=n;
+    while(gap>1)
+    {
+        gap=gap/3+1;
+        for(int i=0;i<n-gap;++i)
+        {
+            int end=i;
+            int tmp=a[end+gap];
+            while(end>=0)
+            {
+                if(tmp<a[end])
+                {
+                    a[end+gap]=a[end];
+                    end-=gap;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            a[end+gap]=tmp;
+        }
+    }
+}
+
+int specialArray(int* nums, int numsSize)
+{
+    ShellSort(nums,numsSize);
+    for(int i=0; i<numsSize; i++)
+    {
+        if(numsSize-i <= nums[i])
+        {
+            if(i== 0 || (i !=0 && nums[i-1] < numsSize-i))
+            return numsSize-i;
+        }
+    }
+    return -1;
+}
