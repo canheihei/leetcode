@@ -1,0 +1,95 @@
+void swap(char* a,char* b)
+{
+    char temp=*a;
+    *a=*b;
+    *b=temp;
+}
+
+
+
+int GetMidIndex(char* a,int begin,int end)
+{
+    int mid=(begin+end)/2;
+    if(a[begin]<a[mid])
+    {
+        if(a[mid]<a[end])
+        {
+            return mid;
+        }
+        else if(a[begin]>a[end])
+        {
+            return begin;
+        }
+        else
+        {
+            return end;
+        }
+    }
+    else
+    {
+        if(a[mid]>a[end])
+        {
+            return mid;
+        }
+        else if(a[end]>a[begin])
+        {
+            return begin;
+        }
+        else
+        {
+            return end;
+        }
+    }
+}
+
+int PartSort(char* a,int begin,int end)
+{
+    int midIndex=GetMidIndex(a,begin,end);
+    swap(&a[midIndex],&a[end]);
+    int keyIndex=end;
+    while(begin<end)
+    {
+        while(begin<end&&a[begin]<=a[keyIndex])
+        {
+            ++begin;
+        }
+        while(begin<end&&a[end]>=a[keyIndex])
+        {
+            --end;
+        }
+        swap(&a[begin],&a[end]);
+    }
+    swap(&a[begin],&a[keyIndex]);
+    return begin;
+}
+
+void QuickSort(char* a,int left,int right)
+{
+    if(left>=right)
+    return;
+    int div=PartSort(a,left,right);
+    QuickSort(a,left,div-1);
+    QuickSort(a,div+1,right);
+}
+
+
+bool isAnagram(char * s, char * t)
+{
+    if((s==NULL&&t==NULL)||strcmp(s,t)==0)
+    return true;
+    else if((s==NULL&&t!=NULL)||(s!=NULL&&t==NULL))
+    return false;
+    else
+    {
+        QuickSort(s,0,strlen(s)-1);
+        QuickSort(t,0,strlen(t)-1);
+        if(strcmp(t,s)==0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
