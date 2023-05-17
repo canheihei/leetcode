@@ -1,0 +1,14 @@
+struct TreeNode* cloneTree(struct TreeNode* root)
+{
+    if(root==NULL) 
+    {
+        return NULL;
+    } 
+    else 
+    {
+        struct TreeNode* clone=creatTreeNode(root->val);
+        clone->left=cloneTree(root->left);
+        clone->right=cloneTree(root->right);       
+        return clone;
+    }
+}
