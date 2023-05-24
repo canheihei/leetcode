@@ -1,0 +1,72 @@
+/**
+ * Return an array of arrays of size *returnSize.
+ * The sizes of the arrays are returned as *returnColumnSizes array.
+ * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
+ */
+ 
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+ int cmp(const void* a, const void* b) 
+{
+    return *(int*)a - *(int*)b;
+}
+
+int** threeSum(int* nums, int numsSize, int* returnSize, int** returnColumnSizes){
+    int** res = NULL;
+    int i, j, k;
+    int left, right, sum;
+
+    // 先将 nums 数组从小到大排序
+    qsort(nums, numsSize, sizeof(int), cmp);
+
+    // 动态申请 res 数组存放答案
+    res = (int**)malloc(sizeof(int*) * numsSize * numsSize);
+    *returnSize = 0;
+    *returnColumnSizes = (int*)malloc(sizeof(int) * numsSize * numsSize);
+
+    // 双指针遍历数组
+    for (i = 0; i < numsSize - 2; i++) {
+        // 去重：如果当前元素和前一个元素相等，则跳过
+        if (i > 0 && nums[i] == nums[i - 1]) {
+            continue;
+        }
+
+        left = i + 1;
+        right = numsSize - 1;
+        while (left < right) {
+            sum = nums[i] + nums[left] + nums[right];
+            if (sum == 0) {
+                // 找到一个解，将结果存入 res 数组中
+                res[*returnSize] = (int*)malloc(sizeof(int) * 3);
+                res[*returnSize][0] = nums[i];
+                res[*returnSize][1] = nums[left];
+                res[*returnSize][2] = nums[right];
+                (*returnColumnSizes)[*returnSize] = 3;
+                (*returnSize)++;
+
+                // 去重：如果左指针和右指针指向的元素与上一个元素相等，则跳过
+                while (left < right && nums[left] == nums[left + 1]) {
+                    left++;
+                }
+                while (left < right && nums[right] == nums[right - 1]) {
+                    right--;
+                }
+
+                // 左右指针同时向内移动
+                left++;
+                right--;
+            }
+            else if (sum < 0) {
+                // 如果三数之和小于 0，说明左指针指向的元素偏小，需要右移左指针
+                left++;
+            }
+            else {
+                // 如果三数之和大于 0，说明右指针指向的元素偏大，需要左移右指针
+                right--;
+            }
+        }
+    }
+
+    return res;
+}
