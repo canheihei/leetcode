@@ -1,0 +1,90 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+void Swap(int* a,int* b)
+{
+    int tmp=*a;
+    *a=*b;
+    *b=tmp;
+}
+
+int GetMidIndex(int* a,int begin,int end)
+{
+    int mid=(begin+end)/2;
+    if(a[begin]<a[mid])
+    {
+        if(a[mid]<a[end])
+        {
+            return mid;
+        }
+        else if(a[begin]>a[end])
+        {
+            return begin;
+        }
+        else
+        {
+            return end;
+        }
+    }
+    else
+    {
+        if(a[mid]>a[end])
+        {
+            return mid;
+        }
+        else if(a[begin]<a[end])
+        {
+            return begin;
+        }
+        else
+        {
+            return end;
+        }
+    }
+}
+
+ int PartSort(int* a,int begin,int end)
+ {
+     int MidIndex=GetMidIndex(a,begin,end);
+     Swap(&a[MidIndex],&a[end]);
+     int keyindex=end;
+     while(begin<end)
+     {
+         while(begin<end&&a[begin]<=a[keyindex])
+         {
+             ++begin;
+         }
+         while(begin<end&&a[end]>=a[keyindex])
+         {
+             --end;
+         }
+         Swap(&a[begin],&a[end]);
+     }
+     Swap(&a[begin],&a[keyindex]);
+     return begin;
+ }
+
+ void QuickSort(int* a,int left,int right)
+ {
+     if(a==NULL||left>=right)
+     {
+         return;
+     }
+     int div=PartSort(a,left,right);
+     QuickSort(a,left,div-1);
+     QuickSort(a,div+1,right);
+ }
+
+
+int* getLeastNumbers(int* arr, int arrSize, int k, int* returnSize)
+{
+    int* array=(int*)malloc(sizeof(int)*k);
+    QuickSort(arr,0,arrSize-1);
+    *returnSize=0;
+    for(int i=0;i<k;++i)
+    {
+        array[i]=arr[i];
+        ++*returnSize;
+    }
+    return array;
+}
