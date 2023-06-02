@@ -1,5 +1,6 @@
 // 创建一个新的二叉树节点
-struct TreeNode* creatTreeNode(int val) {
+struct TreeNode* creatTreeNode(int val) 
+{
     struct TreeNode* newnode=(struct TreeNode*)malloc(sizeof(struct TreeNode));
     newnode->val=val;
     newnode->left=NULL;
@@ -8,10 +9,14 @@ struct TreeNode* creatTreeNode(int val) {
 }
 
 // 克隆一棵二叉树
-struct TreeNode* cloneTree(struct TreeNode* root) {
-    if(root==NULL) {
+struct TreeNode* cloneTree(struct TreeNode* root) 
+{
+    if(root==NULL) 
+    {
         return NULL;
-    } else {
+    } 
+    else 
+    {
         struct TreeNode* clone=creatTreeNode(root->val);
         clone->left=cloneTree(root->left);
         clone->right=cloneTree(root->right);       
@@ -20,10 +25,14 @@ struct TreeNode* cloneTree(struct TreeNode* root) {
 }
 
 // 翻转一棵二叉树
-struct TreeNode* invertTree(struct TreeNode* root) {
-    if(root==NULL) {
+struct TreeNode* invertTree(struct TreeNode* root)
+{
+    if(root==NULL) 
+    {
         return NULL;
-    } else {
+    } 
+    else
+    {
         struct TreeNode* temp=root->left;
         root->left=root->right;
         root->right=temp;
@@ -34,24 +43,31 @@ struct TreeNode* invertTree(struct TreeNode* root) {
 }
 
 // 判断两棵二叉树是否相同
-bool isSameTree(struct TreeNode* p, struct TreeNode* q) {
-    if(p==NULL && q==NULL) {
+bool isSameTree(struct TreeNode* p, struct TreeNode* q) 
+{
+    if(p==NULL && q==NULL) 
+    {
         return true;
     }
-    if(p!=NULL && q==NULL) {
+    if(p!=NULL && q==NULL) 
+    {
         return false;
     }
-    if(p==NULL && q!=NULL) {
+    if(p==NULL && q!=NULL) 
+    {
         return false;
     }
-    if(p->val!=q->val) {
+    if(p->val!=q->val)
+    {
         return false;
     }
     return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
 }
 
-bool isSymmetric(struct TreeNode* root){
-    if(root == NULL) {
+bool isSymmetric(struct TreeNode* root)
+{
+    if(root == NULL) 
+    {
         return true;
     } 
     struct TreeNode* root_clone = cloneTree(root); // 克隆原始二叉树
