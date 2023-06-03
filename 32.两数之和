@@ -6,26 +6,29 @@
  * };
  */
 
+
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2)
 {
-    struct ListNode dummy;
-    dummy.next = NULL;
-    struct ListNode* cur = &dummy;
-    int carry = 0; // 进位
-    while(l1 || l2 || carry)
+    struct ListNode dummy;//相当于初始化一个链表
+    dummy.next=NULL;//初始化了链表，此时还未存放元素，将dummy的next指向NULL
+    struct ListNode* cur=&dummy;//定义一个结构体指针，用来就行链表的尾插尾部指针
+    int carry=0;//进位初始化为0
+    while(l1||l2||carry)//循环条件，l1和l2链表都不为空的同时，进位不能为零，如果去掉carry，那么当carry=1时，得到相加数的最高位将不存在（eg：9+9将只返回8）
     {
-        int val1 = l1 ? l1->val : 0;
-        int val2 = l2 ? l2->val : 0;
-        int sum = val1 + val2 + carry;
-        carry = sum / 10;
-        sum = sum % 10;
-        struct ListNode* node = (struct ListNode*)malloc(sizeof(struct ListNode));
-        node->val = sum;
-        node->next = NULL;
-        cur->next = node;
-        cur = cur->next;
-        l1 = l1 ? l1->next : l1;
-        l2 = l2 ? l2->next : l2;
+        int val1=l1?l1->val:0;//判断l1为空否，若为空则将其数据域赋值为0，否则就为数据域的值
+        int val2=l2?l2->val:0;//同上
+        int sum=val1+val2+carry;//将两个链表的两个数进行相加，且要加上进位的数
+        carry=sum/10;//得到进位的数
+        sum%=10;//得到要尾插的数
+        struct ListNode* node=(struct ListNode*)malloc(sizeof(struct ListNode));//为要尾插的数建立属于它的节点
+        node->val=sum;//将尾插数放入新建节点的数据域
+        node->next=NULL;//将新建节点的指针域置空
+        cur->next=node;//链接得到的数
+        cur=node;//以上插入节点完毕，将cur结构体指针后移，为下一轮循环做铺垫
+
+        l1=l1?l1->next:l1;//l1的元素与l2相加插入完毕，继续加后面的元素
+        l2=l2?l2->next:l2;//同上
+
     }
-    return dummy.next;
+    return dummy.next;//返回相加数的头节点
 }
