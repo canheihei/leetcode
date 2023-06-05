@@ -1,0 +1,12 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* runningSum(int* nums, int numsSize, int* returnSize)
+{
+    for(int i=1;i<numsSize;++i)//默认第一个元素是不变的，从第二个1元素开始存储
+    {
+        nums[i]+=nums[i-1];//从第二项开始，目标数组每项等于现nums数组的最后一项加上原数组的目前项
+    }
+    *returnSize=numsSize;
+    return nums;
+}
