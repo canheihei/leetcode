@@ -1,0 +1,20 @@
+bool isPalindrome(int x)
+{
+   if(x<0)//如果x为负数，则必不为回文数
+   {
+       return false;
+   }
+   //下面将x反转赋值给b
+   long int a=x;
+   long int b=0;
+   while(a)//循环到a的每位反转给b结束
+   {
+       b=b*10+a%10;//从a的最低位开始，将每一位加到b上，每增加一位到b上，那么下一次则需要乘十
+       a/=10;//a的最后一位转到b上则将a的最后一位去掉
+   }
+   if(x==b)
+   {
+       return true;
+   }
+   return false;
+}
