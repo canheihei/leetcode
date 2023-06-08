@@ -1,0 +1,33 @@
+char * longestCommonPrefix(char ** strs, int strsSize)
+{
+    int len=len=strlen(strs[0]);;//记录该字符串数组中字符串长度最小的长度
+    int i=0;//记录字符串下标
+    int j=0;//记录字符串中字符下标
+
+    //先计算len  
+    //将该字符串数组第一个字符串长度赋值给len，从第二个字符串开始遍历，若长度比第一个短，就赋值给len，最后选出最短长度
+    for(i=1;i<strsSize;++i)
+    {
+        if(strlen(strs[i])<len)
+        len=strlen(strs[i]);
+    }
+
+    //开始遍历
+    //最后j会停止在非公共前缀的下标处，给任意字符串此处添上'\0'返回任意第几个数组即可
+    for(j=0;j<len;++j)
+    {
+        for(i=1;i<strsSize;++i)
+        {
+            if(strs[i][j]!=strs[i-1][j])
+            {
+                break;
+            }
+        }
+        if(i!=strsSize)//这里要特别注意，当遇到前缀不一样的时候，i的循环也要终止，不能为strsSize-1，因为如果字符串最后一个不一样会出错
+        {
+            break;
+        }
+    }
+    strs[0][j]='\0';
+    return strs[0];
+}
