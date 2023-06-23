@@ -1,0 +1,31 @@
+int myisdigit(char* arr)
+{
+    for(int i=0;i<strlen(arr);i++)
+    {
+        if((arr[i]>='A'&&arr[i]<='Z')||(arr[i]>='a'&&arr[i]<='z'))
+        {
+            return 1;
+        }
+    }
+    return -1;
+}
+
+int maximumValue(char ** strs, int strsSize)
+{
+    int a=0;
+    for(int i=0;i<strsSize;i++)
+    {
+        if(myisdigit(strs[i])==1&&strlen(strs[i])>a)
+        {
+            a=strlen(strs[i]);
+        }
+        else if(myisdigit(strs[i])==-1)
+        {
+            if(atoi(strs[i])>a)
+            {
+                a=atoi(strs[i]);
+            }
+        }
+    }
+    return a;
+}
