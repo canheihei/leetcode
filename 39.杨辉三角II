@@ -1,0 +1,30 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+ //解题思路为：根据杨辉三角第一二行皆为1，要计算第n行的杨辉三角数那么就要求知道n-1行的杨辉三角数为多少，因此开辟两块空间，ans用于保存要求的第n行，tmp则用来保存第n-1行。
+int* getRow(int rowIndex, int* returnSize) 
+{
+    //先开辟两个空间，tmp为ans的上一行对应的杨辉三角数组
+    int* ans = (int*)malloc(sizeof(int) * (rowIndex + 1));
+    int* tmp = (int*)malloc(sizeof(int) * (rowIndex + 1));
+    
+    tmp[0] = ans[0] = 1;//由杨辉三角的规律可知每一行第一个数为1
+    for (int i = 1; i <= rowIndex; i++) //第一层循环，可知要计算第n行的杨辉三角数得循环n次
+    {
+        tmp[i] = ans[i] = 1;//杨辉三角的每一行最后一个数均为1
+        for (int j = i - 1; j > 0; j--) //ans的第j个数为tmp的第j个数加tmp的第j-1个数
+        {
+            long long sum = (long long)tmp[j] + (long long)tmp[j-1];
+            ans[j] = (int)sum;
+        }
+        // 将临时数组的值拷贝到当前行数组，为了继续进行ans下一行的数组的计算，直到得到第rowIndex行
+        for (int j = 0; j <= i; j++) 
+        {
+            tmp[j] = ans[j];
+        }
+    }
+    
+    *returnSize = rowIndex + 1;
+    free(tmp);//释放开辟的空间，防止内存泄漏
+    return ans;
+}
