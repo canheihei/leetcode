@@ -1,0 +1,22 @@
+//该题思路为找到最低价买入，再在最低价后面找最高价卖出
+int maxProfit(int* prices, int pricesSize)
+{
+    if(pricesSize <= 1)
+        return 0;
+
+    int minPrice = prices[0];  // 最低价格
+    int maxProf = 0;           // 最大利润
+
+    for(int i = 1; i < pricesSize; i++)
+    {
+        // 如果当天价格比最低价格还低，则更新最低价格
+        if(prices[i] < minPrice)
+            minPrice = prices[i];
+        
+        // 当天价格与最低价格的差值作为潜在利润，如果大于当前记录的最大利润，则更新最大利润
+        if(prices[i] - minPrice > maxProf)
+            maxProf = prices[i] - minPrice;
+    }
+
+    return maxProf;
+}
