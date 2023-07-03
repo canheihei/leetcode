@@ -1,0 +1,32 @@
+typedef struct{
+int val;
+int index;
+}Lax;
+
+int cmp(const void *a,const void *b)
+{
+	return (*(Lax *)a).val-(*(Lax *)b).val;  //对结构体中值进行排序
+}
+
+
+bool containsNearbyDuplicate(int* nums, int numsSize, int k){
+Lax res[numsSize];
+int i;
+for(i=0;i<numsSize;i++)
+{
+	res[i].val=nums[i];
+    res[i].index=i;
+}                                          //将值和下标存入结构体
+
+qsort(res,numsSize,sizeof(Lax),cmp);
+
+for(i=1;i<numsSize;i++)
+if(res[i].val==res[i-1].val)
+    if(abs(res[i].index-res[i-1].index)<=k)
+        return true;
+    
+return false;
+
+
+}
+
