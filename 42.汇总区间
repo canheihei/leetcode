@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+char ** summaryRanges(int* nums, int numsSize, int* returnSize)
+{
+    int i=0;
+    char** ans=(char**)malloc(sizeof(char*)*numsSize);
+    for(int j=0;j<numsSize;j++)
+    {
+        ans[j]=(char*)malloc(sizeof(char)*30);
+        memset(ans[j],0,sizeof(char)*30);
+    }
+    int left=0;
+    int right=0;
+    while(right<numsSize)
+    {
+        if(right<numsSize-1 && nums[right+1]==nums[right]+1)
+        {
+            ++right;
+        }
+        else
+        {
+            if(nums[left]==nums[right])
+            {
+                sprintf(ans[i++],"%d",nums[left]);
+            }
+            else
+            {
+                sprintf(ans[i++],"%d->%d",nums[left],nums[right]);
+            }
+            ++right;
+            left=right;
+        }
+    }
+    *returnSize=i;
+    return ans;
+}
