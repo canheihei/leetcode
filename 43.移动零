@@ -1,0 +1,22 @@
+void moveZeroes(int* nums, int numsSize)
+{
+    int i = 0;
+    int j = 0;
+
+    // 遍历整个数组
+    for (; j < numsSize; j++) 
+    {
+        if (nums[j] != 0) 
+        {
+            // 将非零元素移到数组前方
+            nums[i] = nums[j];
+            i++;
+        }
+    }
+
+    // 将剩余位置置为零
+    for (; i < numsSize; i++)
+    {
+        nums[i] = 0;
+    }
+}
