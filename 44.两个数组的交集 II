@@ -1,0 +1,56 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+ void insertsort(int* arr,int n)
+ {
+     for(int i=0;i<n-1;i++)
+     {
+        int end = i;
+        int tmp=arr[i+1];
+        while(end>=0)
+        {
+            if(tmp<arr[end])
+            {
+                arr[end+1]=arr[end];
+                --end;
+            }
+            else
+            {
+                break;
+            }
+        }
+        arr[end+1]=tmp;
+     }
+ }
+
+
+
+int* intersect(int* nums1, int nums1Size, int* nums2, int nums2Size, int* returnSize)
+{
+    int* ans=(int*)malloc(sizeof(int)*(nums1Size>nums2Size?nums1Size:nums2Size));
+    insertsort(nums1,nums1Size);
+    insertsort(nums2,nums2Size);
+    int i=0;
+    int j=0;
+    int n=0;
+    while(i<nums1Size&&j<nums2Size)
+    {
+        if(nums1[i]<nums2[j])
+        {
+            ++i;
+        }
+        else if(nums2[j]<nums1[i])
+        {
+            ++j;
+        }
+        else
+        {
+            ans[n++]=nums1[i];
+            ++i;
+            ++j;
+        }
+    }
+    *returnSize=n;
+    ans = (int*)realloc(ans, sizeof(int) * n);
+    return ans;
+}
