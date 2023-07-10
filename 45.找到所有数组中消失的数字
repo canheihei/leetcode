@@ -1,0 +1,60 @@
+void ShellSort(int* arr, int n)
+{
+    int gap=n;
+    while(gap>1)
+    {
+        gap=gap/3+1;
+        for (int i = 0; i < n-gap; ++i) 
+        {
+            int end = i;
+            int tmp = arr[end+gap];
+            while (end>=0) 
+            {
+                if(tmp<arr[end])
+                {
+                    arr[end+gap] = arr[end];
+                    end-=gap;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            arr[end+gap]=tmp;
+        }
+    }
+}
+
+int* findDisappearedNumbers(int* nums, int numsSize, int* returnSize) 
+{
+    ShellSort(nums, numsSize);
+    int* ans = (int*)malloc(sizeof(int) * numsSize);
+    int n = 0;
+    int num = 1; // 当前期望的数字
+    for (int i = 0; i < numsSize; ++i) 
+    {
+        if (nums[i] < num)
+        {
+            continue;
+        } 
+        else if (nums[i] == num) 
+        {
+            ++num;
+        } 
+        else 
+        { // nums[i] > num，说明有缺失的数字
+            while (num < nums[i]) 
+            {
+                ans[n++] = num++;
+            }
+            ++num;
+        }
+    }
+    while (num <= numsSize) 
+    {
+        ans[n++] = num++;
+    }
+    *returnSize = n;
+    ans = (int*)realloc(ans, sizeof(int) * n);
+    return ans;
+}
