@@ -1,0 +1,55 @@
+void ShellSort(int* a,int n)  //希尔排序（基于插入排序的优化）
+{
+    int gap=n;  //设置初始间隔
+    while(gap>1)  //当间隔=1的时候就是普通的插入排序，故结束
+    {
+        gap=gap/3+1;  设置每次循环间隔
+        for(int i=0;i<n-gap;++i)
+        {
+            int end=i;
+            int key=a[end+gap];
+            while(end>=0)
+            {
+                if(key<a[end])
+                {
+                    a[end+gap]=a[end];
+                    end-=gap;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            a[end+gap]=key;
+        }
+    }
+    
+}
+
+int findContentChildren(int* g, int gSize, int* s, int sSize)
+{
+    ShellSort(g,gSize);
+    ShellSort(s,sSize);
+    int i=0;
+    int j=0;
+    int count=0;
+    for(;i<gSize&&j<sSize;)
+    {
+        if(s[j]>=g[i])
+        {
+            ++count;
+            if(i==gSize-1||j==sSize-1)
+            {
+                break;
+            }
+            ++i;
+            ++j;
+        }
+        else
+        {
+            j++;
+            continue;
+        }
+    }
+    return count;
+}
