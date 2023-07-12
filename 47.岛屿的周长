@@ -1,0 +1,41 @@
+int islandPerimeter(int** grid, int gridSize, int* gridColSize)
+{
+    int perimeter=0;    //初始岛屿的周长为0
+    int row=gridSize;   //定义行数
+    int col=gridColSize[0];     //定义列数
+    //分两种大情况
+    for(int i=0;i<row;++i)
+    {
+        for(int j=0;j<col;++j)
+        {
+            if(grid[i][j]==0)       //当为水时，周长不变。
+            {
+                continue;
+            }
+            else    //当为陆地时,这里开始分类讨论（上下左右）
+            {
+                if(i-1==-1||(i-1!=-1&&grid[i-1][j]==0))     //当这块陆地上方不存在或者为水地时
+                {
+                    perimeter+=1;   //周长加1
+                }   
+                if(i+1==row||(i+1!=row&&grid[i+1][j]==0))    //当这块陆地下方不存在或者为水地时
+                {
+                    perimeter+=1;   //周长加1
+                }
+                if(j-1==-1||(j-1!=-1&&grid[i][j-1]==0))    //当这块陆地左方不存在或者为水地时
+                {
+                    perimeter+=1;   //周长加1
+                }
+                if(j+1==col||(j+1!=col&&grid[i][j+1]==0))    //当这块陆地右方不存在或者为水地时
+                {
+                    perimeter+=1;   //周长加1
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+    }
+    return perimeter;
+}
