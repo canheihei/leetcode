@@ -1,31 +1,40 @@
+//思路:若该链表为空或者只有一个节点，直接返回该链表头部即可，否则从第一节点开始遍历，若该节点的值等于该节点后继节点的值，就直接将该节点的next链接到下下个节点，
+//再把下个节点删掉，如果该节点的值不等于下个节点的值，那该节点指针向后继续遍历。
+
+
+
 /**
  * Definition for singly-linked list.
- * struct ListNode {
+ * struct ListNode 
+   {
  *     int val;
  *     struct ListNode *next;
  * };
  */
 
 
-struct ListNode* deleteDuplicates(struct ListNode* head){
-    if (!head || !(head->next))
-        return head;
 
-    struct ListNode *cur, *tmp;
-    cur = head;
+struct ListNode* deleteDuplicates(struct ListNode* head)
+{
+    if (!head || !(head->next))        //如果该链表不为空或者只有一个节点
+    {  
+        return head;        //就直接返回该节点即可
+    }
 
-
-    while (cur->next != NULL)
+    struct ListNode *cur, *tmp;        //定义两个链表节点指针，cur用来判断它与它后面节点的值是否相等
+    cur = head;            //cur从第一个节点开始遍历
+    while (cur->next != NULL)        //循环结束条件，当cur的next域为空，即往后再没有可比较的节点时结束
     {
-        if(cur->val == cur->next->val)
+        if(cur->val == cur->next->val)        //当cur指向节点的值对于cur指向节点的下一个节点的值
         {
-            tmp = cur->next;
-            cur->next = tmp->next;
-            free(tmp);
+            tmp = cur->next;        //保存要删的重复的节点
+            cur->next = tmp->next;        //跳过重复的节点，将cur指向的节点直接链接到下下个节点
+            free(tmp);        //删掉重复的节点
         }
         else
-            cur = cur->next;
+            cur = cur->next;        //如果cur指向的节点不等于下个节点的值，就将cur向后移动一个节点
     }
+
 
     return head;
 }
