@@ -1,3 +1,7 @@
+//思路：将该模型抽象为二维数组，从第0行开始遍历，若为水地直接继续遍历下一个，若遇到陆地，则判断该陆地的上下左右情况，根据不同情况对周长进行增加即可
+
+
+
 int islandPerimeter(int** grid, int gridSize, int* gridColSize)
 {
     int perimeter=0;    //初始岛屿的周长为0
@@ -12,24 +16,29 @@ int islandPerimeter(int** grid, int gridSize, int* gridColSize)
             {
                 continue;
             }
+
             else    //当为陆地时,这里开始分类讨论（上下左右）
             {
                 if(i-1==-1||(i-1!=-1&&grid[i-1][j]==0))     //当这块陆地上方不存在或者为水地时
                 {
                     perimeter+=1;   //周长加1
                 }   
+
                 if(i+1==row||(i+1!=row&&grid[i+1][j]==0))    //当这块陆地下方不存在或者为水地时
                 {
                     perimeter+=1;   //周长加1
                 }
+
                 if(j-1==-1||(j-1!=-1&&grid[i][j-1]==0))    //当这块陆地左方不存在或者为水地时
                 {
                     perimeter+=1;   //周长加1
                 }
+
                 if(j+1==col||(j+1!=col&&grid[i][j+1]==0))    //当这块陆地右方不存在或者为水地时
                 {
                     perimeter+=1;   //周长加1
                 }
+
                 else
                 {
                     continue;
@@ -37,5 +46,7 @@ int islandPerimeter(int** grid, int gridSize, int* gridColSize)
             }
         }
     }
+
+
     return perimeter;
 }
