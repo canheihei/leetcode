@@ -1,3 +1,7 @@
+//思路：将胃口值和满足值排序（这里排的升序），如何
+
+
+
 void ShellSort(int* a,int n)  //希尔排序（基于插入排序的优化）
 {
     int gap=n;  //设置初始间隔
@@ -15,6 +19,7 @@ void ShellSort(int* a,int n)  //希尔排序（基于插入排序的优化）
                     a[end+gap]=a[end];
                     end-=gap;
                 }
+
                 else
                 {
                     break;
@@ -22,34 +27,38 @@ void ShellSort(int* a,int n)  //希尔排序（基于插入排序的优化）
             }
             a[end+gap]=key;
         }
-    }
-    
+    } 
 }
+
+
 
 int findContentChildren(int* g, int gSize, int* s, int sSize)
 {
-    ShellSort(g,gSize);
-    ShellSort(s,sSize);
-    int i=0;
-    int j=0;
-    int count=0;
-    for(;i<gSize&&j<sSize;)
+    ShellSort(g,gSize);        //对学生的胃口值进行希尔排序
+    ShellSort(s,sSize);        //对饼干的满足值进行希尔排序
+    int i=0;        //定义i从g的第一个元素开始遍历
+    int j=0;        //定义j从s的第一个元素开始遍历
+    int count=0;        //用来统计满足的学生最大人数
+    for(;i<gSize&&j<sSize;)        //开始遍历，直到人数判断完和饼干分发完任意情况发生即结束循环，i和j的增加在循环内进行
     {
-        if(s[j]>=g[i])
+        if(g[i]<=s[j])        //如果学生胃口值小于或等于饼干的满足值
         {
-            ++count;
-            if(i==gSize-1||j==sSize-1)
+            ++count;        //那么满足的学生数加1
+            if(i==gSize-1||j==sSize-1)        //判断完后向后遍历，如果后面没饼干或者没有学生了
             {
-                break;
+                break;        //就直接结束
             }
-            ++i;
-            ++j;
+            ++i;        //否则到下一个学生
+            ++j;        以及到下一个饼干
         }
-        else
+
+        else        //如果学生胃口值大于饼干的满足值，那么继续往后找满足值更大的饼干，学生还是不变
         {
             j++;
             continue;
         }
     }
+
+
     return count;
 }
