@@ -1,5 +1,9 @@
+//思路：先对数组进行排序，这里用插入排序进行排升序，然后从倒数第二个数开始遍历，若该数与后一个数不相同，则count++，当count为3时，返回的数即为第三大的数
+//否则不存在，则返回最后一个数。
 
-void insertsort(int* arr, int n)
+
+
+void insertsort(int* arr, int n)        //插入排序
 {
     for (int i = 0; i < n - 1; ++i)
     {
@@ -21,20 +25,24 @@ void insertsort(int* arr, int n)
     }
 }
 
+
+
 int thirdMax(int* nums, int numsSize)
 {
     insertsort(nums, numsSize);
-    int count = 1;
-    for (int i = numsSize - 2; i >= 0; --i)
+    int count = 1;        //定义count为1，当count为3时，就找到了第三大的数
+    for (int i = numsSize - 2; i >= 0; --i)        //从倒数第二个数开始遍历
     {
-        if (nums[i] != nums[i + 1])
+        if (nums[i] != nums[i + 1])        //若该数与后一个数不相同
         {
-            ++count;
-            if (count == 3)
+            ++count;        //则count++
+            if (count == 3)        //当count为3时，返回的数即为第三大的数
             {
                 return nums[i];
             }
         }
     }
-    return nums[numsSize - 1];
+
+
+    return nums[numsSize - 1];        ////否则不存在，则返回最后一个数
 }
